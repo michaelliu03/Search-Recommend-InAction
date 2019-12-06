@@ -1,2 +1,2 @@
 # Search-Recommend-InAction
-This is the code of Searching and Recommendation System Book。This Book is about of Searching and Recommendation. 
+This is a book about search recommendation. The publisher of the book is mechanical industry press. The book mainly summarizes and introduces some algorithms and architecture design about search recommendation
