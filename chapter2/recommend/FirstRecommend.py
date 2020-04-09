@@ -29,10 +29,10 @@ class FirstRec:
     def __load_and_split_data(self):
         train = dict()
         test = dict()
-        if os.path.exists("data/train.json") and os.path.exists("data/test.json"):
+        if os.path.exists("../data/train.json") and os.path.exists("../data/test.json"):
             print("从文件中加载训练和测试集")
-            train = json.load(open("data/train.json"))
-            test = json.load(open("data/test.json"))
+            train = json.load(open("../data/train.json"))
+            test = json.load(open("../data/test.json"))
             print("从文件中加载数据完成")
             # print(train)
         else:
