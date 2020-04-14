@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 #-*-coding:utf-8-*-
-# @File:Segment.py
+# @File:news_spider.py
 # @Author: Michael.liu
 # @Date:2019/2/12
-# @Desc: NLP Segmentation ToolKit - Hanlp Python Version
+# @Desc: 这个类主要是一个排虫，爬虫是搜索系统的一部分。
+#        搜索引擎的建立可以选择排虫也可以选择没有，根据具体的产品需要
 
 from bs4 import BeautifulSoup
 import urllib.request
