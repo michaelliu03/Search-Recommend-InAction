@@ -59,8 +59,47 @@ def del_corpus(filepath):
         output_data.write('\n')
     output_data.close()
 
+def wordtag():
+    input_data = codecs.open('train1.txt', 'r', 'utf-8')
+    output_data = codecs.open('wordtag.txt', 'w', 'utf-8')
+    row =0
+    for line in input_data.readlines():
+        # line=re.split('[，。；！：？、‘’“”]/[o]'.decode('utf-8'),line.strip())
+        line = line.strip().split()
+
+        if len(line) == 0 :
+            continue
+        for word in line:
+            word = word.split('/')
+            try:
+                if word[1] != 'o':
+                    if len(word[0]) == 1:
+                        output_data.write(word[0] + "/B_" + word[1] + " ")
+                    elif len(word[0]) == 2:
+                        output_data.write(word[0][0] + "/B_" + word[1] + " ")
+                        output_data.write(word[0][1] + "/E_" + word[1] + " ")
+                    else:
+                        try:
+                            output_data.write(word[0][0] + "/B_" + word[1] + " ")
+                            for j in word[0][1:len(word[0]) - 1]:
+                                output_data.write(j + "/M_" + word[1] + " ")
+                            output_data.write(word[0][-1] + "/E_" + word[1] + " ")
+                        except:   #这是一个坑，没有找具体的原因
+                            continue
+                else:
+                    for j in word[0]:
+                        output_data.write(j + "/o" + " ")
+            except:   #这是一个坑，没有找具体的原因
+                continue
+        output_data.write('\n')
+
+    input_data.close()
+    output_data.close()
+    logger.info("this is finished!")
 
 if __name__ == "__main__":
     print("......begin......")
-    filepath = os.path.dirname("D:\\coding\\self-project\\Search-Recommend-InAction\\Search-Recommend-InAction\\data\\charpter2\\news\\")
-    del_corpus(filepath)
+    #filepath = os.path.dirname("D:\\coding\\self-project\\Search-Recommend-InAction\\Search-Recommend-InAction\\data\\charpter2\\news\\")
+    #del_corpus(filepath)
+    wordtag()
+
