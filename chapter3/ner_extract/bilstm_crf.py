@@ -5,17 +5,5 @@
 # @Date:2019/2/12
 # @Desc: NLP Segmentation ToolKit - Hanlp Python Version
 
-
-def is_chinese(s):
-    for ch in s:
-        if '\u4e00' <= ch <= '\u9fff':
-            return True
-    return False
-
-
-
-
-
-
-
-
+class BiLSTM_CRF(object):
+    print()

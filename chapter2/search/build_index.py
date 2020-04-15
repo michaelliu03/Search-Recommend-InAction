@@ -27,15 +27,14 @@
 #
 
 import os
-from idlelib import search
+
 from os import listdir
 from pyhanlp import *
 import sqlite3
 import xml.etree.ElementTree as ET
 import configparser
 from pyhanlp import *
-import utils
-import jieba
+
 
 
 
