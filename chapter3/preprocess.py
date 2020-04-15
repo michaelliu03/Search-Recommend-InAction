@@ -25,19 +25,19 @@ def new_seg(content):
     seg_list = HanLP.segment(content)
     for term in seg_list:
         word = str(term.word)
-        word_nature = term.nature
-        if word == '\t' or word == '\t\r' or word =='\t\n' or word=='\n':
-            continue
+        word_nature = str(term.nature)
+        #print(word_nature)
+        if word_nature == 'nr' or word_nature == 'ns' or word_nature == 'nt':
+            word_new = term.word
+            word_nature = str(term.nature)
+            term_new = word_new + '/' + word_nature
+            term_new = term_new + " "
+            ret.append(term_new)
         else:
-            if word_nature == 'nr' or word_nature == 'ns' or word_nature == 'nt':
-                word_new = term.word
-                word_nature = term.nature
-                term_new = word_new + '/' + word_nature
-                ret.append(term_new)
-            else:
-               word_new =  term.word
-               term_new = word_new + '/' + 'o'
-               ret.append(term_new)
+            word_new =  term.word
+            term_new = word_new + '/' + 'o'
+            term_new = term_new + " "
+            ret.append(term_new)
     return ret
 
 
@@ -48,10 +48,10 @@ def del_corpus(filepath):
     for i in files:
         file_path = dir_root + "\\"+i
         root = ET.parse(file_path).getroot()
-        title = root.find('title').text
-        body = root.find('body').text
-        docid = int(root.find('id').text)
-        date_time = root.find('datetime').text
+        title = root.find('title').text.replace('\t','').replace('\r','').replace('\n','')
+        body = root.find('body').text.replace('\t','').replace('\r','').replace('\n','')
+        #docid = int(root.find('id').text)
+        #date_time = root.find('datetime').text
         content = "".join(title + '↑' + body)
         seg_py_list = new_seg(content)
         for i in seg_py_list:
