@@ -80,9 +80,6 @@ class SearchIndex:
         words = f.read()
         self.stop_words = set(words.split('\n'))
 
-        '''
-         TODO: 判断字符串是否合理
-        '''
 
 
      def is_number(self, s):
