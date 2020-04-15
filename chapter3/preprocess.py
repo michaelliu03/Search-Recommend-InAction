@@ -52,13 +52,13 @@ def del_corpus(filepath):
         body = root.find('body').text.replace('\t','').replace('\r','').replace('\n','')
         #docid = int(root.find('id').text)
         #date_time = root.find('datetime').text
-        content = "".join(title + '↑' + body)
+        content = "".join(title + '。' + body)
         seg_py_list = new_seg(content)
         for i in seg_py_list:
             output_data.write(i)
         output_data.write('\n')
     output_data.close()
-        #ld, cleaned_dict = clean_list(seg_py_list)
+
 
 if __name__ == "__main__":
     print("......begin......")
