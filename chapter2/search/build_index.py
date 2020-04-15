@@ -5,7 +5,8 @@
 # @Date:2019/2/12
 # @Desc: 主要是为了建立搜索引擎中的index,分词器可以用jieba，也可以用hanlp，
 #        因为本人对hanlp比较熟悉，所以采用了hanlp，还有这里选用了sqlite3引擎
-#        其实本人更喜欢把这部分数据放到mysql或者hbase上
+#        其实本人更喜欢把这部分数据放到mysql或者hbase上,整个代码在改写过程中遇到了一些坑，
+#        欢迎读者朋友可以自行尝试！！！^_^
 #        在爬虫部分中的代码已经看到了抓取网页的代码，这里就不再赘述，只是看一下采集到的新闻格式如下：
 '''
 <?xml version='1.0' encoding='utf-8'?>
@@ -34,6 +35,8 @@ import xml.etree.ElementTree as ET
 import configparser
 from pyhanlp import *
 import utils
+import jieba
+
 
 
 
@@ -78,42 +81,65 @@ class SearchIndex:
         self.stop_words = set(words.split('\n'))
 
         '''
-         判断字符串是否合理
+         TODO: 判断字符串是否合理
         '''
 
 
+     def is_number(self, s):
+         try:
+             float(s)
+             return True
+         except ValueError:
+             return False
 
-     def clean_list(self,seg_list):
+     def clean_list(self, seg_list):
          cleaned_dict = {}
          n = 0
-         for term in seg_list:
-             word = str(term.word)
-             print( type(word))
-             #print(type(word))
+         for i in seg_list:
+             i = i.strip().lower()
 
-             if word != ''  or word not in self.stop_words:
-                 n = n +1
-                 cleaned_dict[word]  =   cleaned_dict[word] + 1
-             else:
-                 cleaned_dict[word] = 1
+             if i != '' and not self.is_number(i) and i not in self.stop_words:
+                 n = n + 1
+                 if i in cleaned_dict:
+                     cleaned_dict[i] = cleaned_dict[i] + 1
+                 else:
+                     cleaned_dict[i] = 1
+ #        print(cleaned_dict)
          return n, cleaned_dict
-
 
      '''
         这里写了sqlite ，第一次操作sqlite
      '''
-     def write_posting_to_db(self,db_path):
+
+     def write_postings_to_db(self, db_path):
          conn = sqlite3.connect(db_path)
          c = conn.cursor()
+
          c.execute('''DROP TABLE IF EXISTS postings''')
-         c.execute('''CREATE TABLE postings(term TEXT PRIMARY KEY,df INTEGER ,docs TEXT)''')
-         for key,value in self.postings_lists.items():
-             doc_list = '\n'.join(map(str,value[1]))
-             t = (key,value[0],doc_list)
-             c.execute("INSERT INTO postings VALUES (?,?,?)",t)
+         c.execute('''CREATE TABLE postings
+                       (term TEXT PRIMARY KEY, df INTEGER, docs TEXT)''')
+
+         for key, value in self.postings_lists.items():
+             doc_list = '\n'.join(map(str, value[1]))
+             t = (key, value[0], doc_list)
+             c.execute("INSERT INTO postings VALUES (?, ?, ?)", t)
 
          conn.commit()
          conn.close()
+
+     def new_seg(self,content):
+         ret = []
+         seg_list = HanLP.segment(content)
+         for term in seg_list:
+             word = str(term.word)
+             # 判断新
+             if word =='' or word =='\r' or word =='\t\n' or word =='\n' or word =='\t':
+                 continue
+             else:
+                 ret.append(word)
+         #print(ret)
+         return ret
+
 
      def build_postings_index(self):
          config = configparser.ConfigParser()
@@ -127,11 +153,9 @@ class SearchIndex:
              body = root.find('body').text
              docid = int(root.find('id').text)
              date_time = root.find('datetime').text
-             #seg_list = jieba.lcut(title + '。' + body, cut_all=False)
-             #ld, cleaned_dict = self.clean_list(seg_list)
-
-             seg_list  = HanLP.segment("".join(title + '↑' + body))
-             ld, cleaned_dict = self.clean_list(seg_list)
+             content  = "".join(title + '↑' + body)
+             seg_py_list = self.new_seg(content)
+             ld, cleaned_dict = self.clean_list(seg_py_list)
              AVG_L = AVG_L + ld
 
              for key, value in cleaned_dict.items():
@@ -146,7 +170,9 @@ class SearchIndex:
          config.set('DEFAULT', 'avg_l', str(AVG_L))
          with open(self.config_path, 'w', encoding=self.config_encoding) as configfile:
              config.write(configfile)
-         self.write_postings_to_db(config['DEFAULT']['db_path'])
+         db_path = os.path.join(os.path.dirname(__file__), config['DEFAULT']['db_path'])
+
+         self.write_postings_to_db(db_path)
 
 
 if __name__ == "__main__":
