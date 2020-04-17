@@ -10,9 +10,10 @@ import logging
 from pyhanlp import *
 import codecs
 import re
+import collections
 import pandas as pd
 import numpy as np
-
+import json
 
 import xml.etree.ElementTree as ET
 logger = logging.getLogger(__name__)
@@ -97,9 +98,112 @@ def wordtag():
     output_data.close()
     logger.info("this is finished!")
 
+datas = list()
+labels = list()
+linedata = list()
+linelable = list()
+
+tag2id = {'' :0,
+        'B_ns' :1,
+        'B_nr' :2,
+        'B_nt' :3,
+        'M_nt' :4,
+        'M_nr' :5,
+        'M_ns' :6,
+        'E_nt' :7,
+        'E_nr' :8,
+        'E_ns' :9,
+         'o': 0}
+
+id2tag = {  0:'' ,
+            1:'B_ns' ,
+            2:'B_nr' ,
+            3:'B_nt' ,
+            4:'M_nt' ,
+            5:'M_nr' ,
+            6:'M_ns' ,
+            7:'E_nt' ,
+            8:'E_nr' ,
+            9:'E_ns' ,
+            10: 'o'}
+
+def flatten(x):
+    result = []
+    for el in x:
+        if isinstance(x, collections.Iterable) and not isinstance(el, str):
+            result.extend(flatten(el))
+        else:
+            result.append(el)
+    return result
+
+#输出词表
+def output_vocabulary(abc,filename):
+    with open(filename,'w') as outfile:
+        json.dump(abc,outfile,indent=4)
+
+max_len =  500
+
+
+
+
+def format_corpus(filepath):
+    input_data = codecs.open(filepath, 'r', 'utf-8')
+    for line in input_data.readlines():
+        line = re.split('[，。；！：？、‘’“”]/[o]', line.strip())
+        for sen in line:
+            sen = sen.strip().split()
+            if len(sen) == 0:
+                continue
+            linedata = []
+            linelabel = []
+            num_not_o = 0
+            for word in sen:
+                word = word.split('/')
+                # 这里有一个坑
+                try:
+                    linedata.append(word[0])
+                    linelabel.append(tag2id[word[1]])
+                except:
+                    continue
+
+                if word[1] != 'o':
+                    num_not_o += 1
+            if num_not_o != 0:
+                datas.append(linedata)
+                labels.append(linelabel)
+
+    input_data.close()
+    print(len(datas))
+    print(len(labels))
+
+
+    all_words = flatten(datas)
+    sr_allwords = pd.Series(all_words)
+    sr_allwords = sr_allwords.value_counts()
+    set_words = sr_allwords.index
+    set_ids = range(1, len(set_words) + 1)
+    word2id = pd.Series(set_ids, index=set_words)
+    word2id.to_json('vocabulary_word2id.json')
+    #output_vocabulary(word2id, )
+    id2word = pd.Series(set_words, index=set_ids)
+    word2id["unknown"] = len(word2id) + 1
+    def X_padding(words):
+       ids = list(word2id[words])
+       if len(ids) >= max_len:
+           return ids[:max_len]
+       ids.extend([0] * (max_len - len(ids)))
+
+
+
+
+
+
+
+
 if __name__ == "__main__":
     print("......begin......")
     #filepath = os.path.dirname("D:\\coding\\self-project\\Search-Recommend-InAction\\Search-Recommend-InAction\\data\\charpter2\\news\\")
     #del_corpus(filepath)
-    wordtag()
-
+    #wordtag()
+    meragefilepath = "D:\\coding\\self-project\\Search-Recommend-InAction\\Search-Recommend-InAction\\data\\charpter2\\format_train\\wordtag.txt"
+    format_corpus(meragefilepath)

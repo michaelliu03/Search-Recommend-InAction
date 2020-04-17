@@ -70,8 +70,6 @@ class SearchIndex:
         self.config_encoding = config_encoding
         config = configparser.ConfigParser()
         config.read(config_path, config_encoding)
-        #self.config_path =
-        #self.config_encoding =
         print(config_path + "\t" + config_encoding)
         file_path = os.path.join(os.path.dirname(__file__),config['DEFAULT']['stop_words_path'])
         file_encoding =config['DEFAULT']['stop_words_encoding']
@@ -133,7 +131,6 @@ class SearchIndex:
                  continue
              else:
                  ret.append(word)
-         #print(ret)
          return ret
 
 
@@ -149,7 +146,7 @@ class SearchIndex:
              body = root.find('body').text
              docid = int(root.find('id').text)
              date_time = root.find('datetime').text
-             content  = "".join(title + '↑' + body)
+             content  = "".join(title + '。' + body)
              seg_py_list = self.new_seg(content)
              ld, cleaned_dict = self.clean_list(seg_py_list)
              AVG_L = AVG_L + ld
@@ -175,4 +172,5 @@ if __name__ == "__main__":
     filename = os.path.join(os.path.dirname(__file__), 'config.ini')
     ir = SearchIndex(filename, 'utf-8')
     ir.build_postings_index()
+    print("finished!")
 
