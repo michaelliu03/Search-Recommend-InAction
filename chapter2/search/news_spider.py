@@ -18,7 +18,7 @@ from socket import timeout
 
 
 '''
- 这个爬虫同样参考了git上的一个新闻爬虫的代码，原址可以参考 https://github.com/01joy/news-search-engine/tree/master/code
+ 这个爬虫同样参考了git上的一个新闻爬虫的代码，
  采集到的数据可以是建立搜索引擎必不可少的工具：无论搜索还是推荐，甚至是广告系统，最终玩的都是对数据的处理和分析。
  再好的算法离开数据什么也不是！！！这一点可能在我的书中没有强调。
 '''
@@ -89,7 +89,7 @@ def get_news_pool(start_date, end_date):
     while start_date <= end_date:
         date_str = start_date.strftime("%Y/%m%d")
         page_url = 'http://www.chinanews.com/scroll-news/%s/news.shtml' % (date_str)
-        print('Extracting news urls at %s' % date_str)
+        print('Extracting news.4.20 urls at %s' % date_str)
         news_pool += get_one_page_news(page_url)
         #        print('done')
         start_date += delta
@@ -105,7 +105,7 @@ def crawl_news(news_pool, min_body_len, doc_dir_path, doc_encoding):
         try:
             response = urllib.request.urlopen(req, timeout=10)
             html = response.read()
-        #            response = urllib.request.urlopen(news[1])
+        #            response = urllib.request.urlopen(news.4.20[1])
         except socket.timeout as err:
             print('socket.timeout')
             print(err)
@@ -165,6 +165,6 @@ if __name__ == '__main__':
     end_date = date.today()
     start_date = end_date + delta
     news_pool = get_news_pool(start_date, end_date)
-    print('Starting to crawl %d news' % len(news_pool))
+    print('Starting to crawl %d news.4.20' % len(news_pool))
     crawl_news(news_pool, 140, config['DEFAULT']['doc_dir_path'], config['DEFAULT']['doc_encoding'])
     print('done!')

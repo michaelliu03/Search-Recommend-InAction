@@ -98,7 +98,6 @@ class SearchIndex:
                      cleaned_dict[i] = cleaned_dict[i] + 1
                  else:
                      cleaned_dict[i] = 1
- #        print(cleaned_dict)
          return n, cleaned_dict
 
      '''

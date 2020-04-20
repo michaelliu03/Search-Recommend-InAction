@@ -19,7 +19,7 @@ import xml.etree.ElementTree as ET
 logger = logging.getLogger(__name__)
 
 #定义一个root，需要根据root拼整个文件件的完整路径
-dir_root =  os.path.dirname("D:\\coding\\self-project\\Search-Recommend-InAction\\Search-Recommend-InAction\\data\\charpter2\\news\\")
+dir_root =  os.path.dirname("D:\\coding\\self-project\\Search-Recommend-InAction\\Search-Recommend-InAction\\data\\charpter2\\news.4.20\\")
 
 def new_seg(content):
     ret = []
@@ -202,7 +202,7 @@ def format_corpus(filepath):
 
 if __name__ == "__main__":
     print("......begin......")
-    #filepath = os.path.dirname("D:\\coding\\self-project\\Search-Recommend-InAction\\Search-Recommend-InAction\\data\\charpter2\\news\\")
+    #filepath = os.path.dirname("D:\\coding\\self-project\\Search-Recommend-InAction\\Search-Recommend-InAction\\data\\charpter2\\news.4.20\\")
     #del_corpus(filepath)
     #wordtag()
     meragefilepath = "D:\\coding\\self-project\\Search-Recommend-InAction\\Search-Recommend-InAction\\data\\charpter2\\format_train\\wordtag.txt"
