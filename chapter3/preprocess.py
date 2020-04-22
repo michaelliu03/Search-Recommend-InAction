@@ -19,7 +19,7 @@ import xml.etree.ElementTree as ET
 logger = logging.getLogger(__name__)
 
 #定义一个root，需要根据root拼整个文件件的完整路径
-dir_root =  os.path.dirname("D:\\coding\\self-project\\Search-Recommend-InAction\\Search-Recommend-InAction\\data\\charpter2\\news.4.20\\")
+dir_root =  os.path.dirname("D:\\coding\\self-project\\Search-Recommend-InAction\\Search-Recommend-InAction\\data\\charpter2\\news-2020-04-21.4.20\\")
 
 def new_seg(content):
     ret = []
@@ -187,11 +187,47 @@ def format_corpus(filepath):
     #output_vocabulary(word2id, )
     id2word = pd.Series(set_words, index=set_ids)
     word2id["unknown"] = len(word2id) + 1
+
     def X_padding(words):
        ids = list(word2id[words])
        if len(ids) >= max_len:
            return ids[:max_len]
        ids.extend([0] * (max_len - len(ids)))
+
+    def y_padding(ids):
+        if len(ids) >= max_len:
+            return ids[:max_len]
+        ids.extend([0]*(max_len-len(ids)))
+        return ids
+
+    df_data = pd.DataFrame({'words':datas,'tags':labels},index=range(len(datas)))
+    df_data['x'] = df_data['words'].apply(X_padding)
+    df_data['y'] = df_data['tags'].apply(y_padding)
+    x = np.asarray(list(df_data['x'].values))
+    y = np.asarray(list(df_data['y'].values))
+
+    from sklearn.model_selection import train_test_split
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.1, random_state=43)
+    x_train, x_valid, y_train, y_valid = train_test_split(x_train, y_train, test_size=0.2, random_state=43)
+
+    print('Finished creating the data generator.')
+
+    import pickle
+    import os
+    with open('../dataMSRA.pkl', 'wb') as outp:
+        pickle.dump(word2id, outp)
+        pickle.dump(id2word, outp)
+        pickle.dump(tag2id, outp)
+        pickle.dump(id2tag, outp)
+        pickle.dump(x_train, outp)
+        pickle.dump(y_train, outp)
+        pickle.dump(x_test, outp)
+        pickle.dump(y_test, outp)
+        pickle.dump(x_valid, outp)
+        pickle.dump(y_valid, outp)
+    print('** Finished saving the data.')
+
+
 
 
 
@@ -202,7 +238,7 @@ def format_corpus(filepath):
 
 if __name__ == "__main__":
     print("......begin......")
-    #filepath = os.path.dirname("D:\\coding\\self-project\\Search-Recommend-InAction\\Search-Recommend-InAction\\data\\charpter2\\news.4.20\\")
+    #filepath = os.path.dirname("D:\\coding\\self-project\\Search-Recommend-InAction\\Search-Recommend-InAction\\data\\charpter2\\news-2020-04-21.4.20\\")
     #del_corpus(filepath)
     #wordtag()
     meragefilepath = "D:\\coding\\self-project\\Search-Recommend-InAction\\Search-Recommend-InAction\\data\\charpter2\\format_train\\wordtag.txt"

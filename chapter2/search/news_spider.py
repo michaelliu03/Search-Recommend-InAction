@@ -89,7 +89,7 @@ def get_news_pool(start_date, end_date):
     while start_date <= end_date:
         date_str = start_date.strftime("%Y/%m%d")
         page_url = 'http://www.chinanews.com/scroll-news/%s/news.shtml' % (date_str)
-        print('Extracting news.4.20 urls at %s' % date_str)
+        print('Extracting news-2020-04-21.4.20 urls at %s' % date_str)
         news_pool += get_one_page_news(page_url)
         #        print('done')
         start_date += delta
@@ -105,7 +105,7 @@ def crawl_news(news_pool, min_body_len, doc_dir_path, doc_encoding):
         try:
             response = urllib.request.urlopen(req, timeout=10)
             html = response.read()
-        #            response = urllib.request.urlopen(news.4.20[1])
+        #            response = urllib.request.urlopen(news-2020-04-21.4.20[1])
         except socket.timeout as err:
             print('socket.timeout')
             print(err)
@@ -165,6 +165,6 @@ if __name__ == '__main__':
     end_date = date.today()
     start_date = end_date + delta
     news_pool = get_news_pool(start_date, end_date)
-    print('Starting to crawl %d news.4.20' % len(news_pool))
+    print('Starting to crawl %d news-2020-04-21.4.20' % len(news_pool))
     crawl_news(news_pool, 140, config['DEFAULT']['doc_dir_path'], config['DEFAULT']['doc_encoding'])
     print('done!')
