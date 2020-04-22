@@ -19,7 +19,15 @@ import xml.etree.ElementTree as ET
 logger = logging.getLogger(__name__)
 
 #定义一个root，需要根据root拼整个文件件的完整路径
-dir_root =  os.path.dirname("D:\\coding\\self-project\\Search-Recommend-InAction\\Search-Recommend-InAction\\data\\charpter2\\news-2020-04-21.4.20\\")
+dir_root =  os.path.dirname("D:\\coding\\self-project\\Search-Recommend-InAction\\Search-Recommend-InAction\\data\\charpter2\\news-2020-04-22-part2-2020-04-22-part1-2020-04-20\\")
+
+def check_contain_chinese(check_str):
+    for ch in check_str:
+        if u'\u4e00' <= ch <= u'\u9fff':
+            return True
+    return False
+
+
 
 def new_seg(content):
     ret = []
@@ -27,7 +35,11 @@ def new_seg(content):
     for term in seg_list:
         word = str(term.word)
         word_nature = str(term.nature)
-        #print(word_nature)
+
+        # 去所有的非中文字符
+        if check_contain_chinese(word) is not True:
+            continue
+
         if word_nature == 'nr' or word_nature == 'ns' or word_nature == 'nt':
             word_new = term.word
             word_nature = str(term.nature)
@@ -35,10 +47,13 @@ def new_seg(content):
             term_new = term_new + " "
             ret.append(term_new)
         else:
-            word_new =  term.word
-            term_new = word_new + '/' + 'o'
-            term_new = term_new + " "
-            ret.append(term_new)
+            if word.strip() == ' ':
+                continue
+            else:
+                word_new =  term.word
+                term_new = word_new + '/' + 'o'
+                term_new = term_new + " "
+                ret.append(term_new)
     return ret
 
 
@@ -143,9 +158,6 @@ def output_vocabulary(abc,filename):
 
 max_len =  500
 
-
-
-
 def format_corpus(filepath):
     input_data = codecs.open(filepath, 'r', 'utf-8')
     for line in input_data.readlines():
@@ -238,8 +250,9 @@ def format_corpus(filepath):
 
 if __name__ == "__main__":
     print("......begin......")
-    #filepath = os.path.dirname("D:\\coding\\self-project\\Search-Recommend-InAction\\Search-Recommend-InAction\\data\\charpter2\\news-2020-04-21.4.20\\")
-    #del_corpus(filepath)
+    filepath = os.path.dirname("D:\\coding\\self-project\\Search-Recommend-InAction\\Search-Recommend-InAction\\data\\charpter2\\news-2020-04-22-part2-2020-04-22-part1-2020-04-20\\")
+    del_corpus(filepath)
     #wordtag()
-    meragefilepath = "D:\\coding\\self-project\\Search-Recommend-InAction\\Search-Recommend-InAction\\data\\charpter2\\format_train\\wordtag.txt"
-    format_corpus(meragefilepath)
+    #meragefilepath = "D:\\coding\\self-project\\Search-Recommend-InAction\\Search-Recommend-InAction\\data\\charpter2\\format_train\\wordtag.txt"
+    #format_corpus(meragefilepath)
+    print("finished!!")
