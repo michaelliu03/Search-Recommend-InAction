@@ -196,7 +196,7 @@ def format_corpus(filepath):
     set_ids = range(1, len(set_words) + 1)
     word2id = pd.Series(set_ids, index=set_words)
     word2id.to_json('vocabulary_word2id.json')
-    #output_vocabulary(word2id, )
+
     id2word = pd.Series(set_words, index=set_ids)
     word2id["unknown"] = len(word2id) + 1
 
@@ -238,15 +238,6 @@ def format_corpus(filepath):
         pickle.dump(x_valid, outp)
         pickle.dump(y_valid, outp)
     print('** Finished saving the data.')
-
-
-
-
-
-
-
-
-
 
 if __name__ == "__main__":
     print("......begin......")

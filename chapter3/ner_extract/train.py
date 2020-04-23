@@ -22,7 +22,7 @@ from .Batch import BatchGenerator
 from .bilstm_crf import BiLSTM_CRF
 from utils import *
 
-with open('../data/renmindata.pkl', 'rb') as inp:
+with open('./dataMSRA.pkl', 'rb') as inp:
     word2id = pickle.load(inp)
     id2word = pickle.load(inp)
     tag2id = pickle.load(inp)
@@ -68,7 +68,7 @@ if len(sys.argv) == 2 and sys.argv[1] == "pretrained":
     unknow_pre.extend([1] * 100)
     embedding_pre.append(unknow_pre)  # wordvec id 0
     for word in word2id:
-        if word2vec.has_key(word):
+        if word in word2vec:
             embedding_pre.append(word2vec[word])
         else:
             embedding_pre.append(unknow_pre)
