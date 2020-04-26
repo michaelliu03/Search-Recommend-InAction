@@ -19,7 +19,7 @@ import xml.etree.ElementTree as ET
 logger = logging.getLogger(__name__)
 
 #定义一个root，需要根据root拼整个文件件的完整路径
-dir_root =  os.path.dirname("D:\\coding\\self-project\\Search-Recommend-InAction\\Search-Recommend-InAction\\data\\charpter2\\news-2020-04-22-part2-2020-04-22-part1-2020-04-20\\")
+dir_root =  os.path.dirname("D:\\coding\\self-project\\Search-Recommend-InAction\\Search-Recommend-InAction\\data\\charpter2\\news-2020-04-26-part1-2020-04-26-2020-04-22-part2-2020-04-22-part1-2020-04-20\\")
 
 def check_contain_chinese(check_str):
     for ch in check_str:
@@ -241,7 +241,7 @@ def format_corpus(filepath):
 
 if __name__ == "__main__":
     print("......begin......")
-    filepath = os.path.dirname("D:\\coding\\self-project\\Search-Recommend-InAction\\Search-Recommend-InAction\\data\\charpter2\\news-2020-04-22-part2-2020-04-22-part1-2020-04-20\\")
+    filepath = os.path.dirname("D:\\coding\\self-project\\Search-Recommend-InAction\\Search-Recommend-InAction\\data\\charpter2\\news-2020-04-26-part1-2020-04-26-2020-04-22-part2-2020-04-22-part1-2020-04-20\\")
     del_corpus(filepath)
     #wordtag()
     #meragefilepath = "D:\\coding\\self-project\\Search-Recommend-InAction\\Search-Recommend-InAction\\data\\charpter2\\format_train\\wordtag.txt"
