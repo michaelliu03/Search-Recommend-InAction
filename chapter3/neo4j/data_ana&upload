@@ -1,0 +1,163 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# @project : ejob_tags
+# @File : data_ana.py
+# @Time    : 2020/4/27 15:23
+# @Author  : Zhaohy
+import jieba
+jieba.load_userdict('user_dict.txt')
+from jieba import posseg as pg
+
+import re
+
+def process_director(dire):
+    dire= dire.replace('【编辑:','').replace('】','')
+    return dire
+
+def dis_play(l,mark):
+
+    for i in  l :
+        print(mark , ':' , i)
+
+def process_content(cont):
+    '''
+    find relation from each news by input cont
+    '''
+
+
+    urls = re.findall(r"<url>(.*?)</url>",cont)
+    title = re.findall(r"<title>(.*?)</title>", cont)
+    datetime = re.findall(r"<datetime>(.*?)</datetime>", cont)
+    new = re.sub(r"</body>(.*?)<body>",'',cont)
+    #print(new)
+
+    keys = {}
+    for w,f in pg.cut(new):
+        if f[0] == 'n' or len(w) > 3 :
+            #print(w)
+            if w in keys :
+                keys[w] += 1
+            else:
+                keys[w] = 1
+
+    for w,f in pg.cut(title[0]):
+        if f[0] == 'n' or len(w) > 3 :
+            #print(w)
+            if w in keys :
+                keys[w] += 3
+            else:
+                keys[w] = 3
+
+    words = []
+    count = 0
+    for k,v in sorted(keys.items(),key=lambda k:k[1],reverse=True):
+        #print(k,v)
+        count += 1
+        words.append(k)
+        if count > 3 :
+            break
+
+    return urls[0],title[0],datetime[0],words
+
+
+test = "</body></doc><?xml version='1.0' encoding='utf-8'?><doc><id>203</id><url>http://www.chinanews.com/business/2020/04-08/9150964.shtml</url>" \
+       "<title>阿里董事会主席张勇：全力以“复”助武汉回暖</title>" \
+       "<datetime>2020-4-8 16:25:00</datetime><body>	" \
+       "4月8日，武汉正式解除离汉通道管控，城市全面重启。“武汉，谢谢你！”在武汉“云招商”专场活动上，" \
+       "阿里巴巴集团董事会主席兼首席执行官张勇说：“阿里巴巴愿意全力发挥在数字技术和商业上的优势，整合全平台的能力，助力武汉抓好疫情防控、经济恢复和企业服务，尽快推动消费、制造、内贸和外贸的全面回暖。”" \
+       "同时，阿里巴巴还将助力武汉完善城市治理，探索超大城市现代化治理的新方式。" \
+       "就在一天前，阿里巴巴时隔11年再次启动扶助中小企业的特别行动“春雷计划”，充分利用阿里巴巴的数字化能力积淀，采取一切必要行动，帮助中小企业穿越不确定性，" \
+       "把握发展机遇。武汉经济社会恢复发展、复工复产复市顺利进行，对全社会都有着不可替代的重要意义。" \
+       "武汉市36万街边小店、小微企业、个体工商户等，都将从今天开始得到一个月的免息贷款，利息由网商银行全额承担。智慧网络助农兴农是“春雷计划”的一大重点。" \
+       "阿里巴巴与湖北达成助力当地农货销售的一揽子计划，率先在湖北落地助农兴农措施。淘宝3月即上线爱心助农“湖北加油”专区，" \
+       "4月1日到6日，淘宝累计销售湖北农货1.2万吨，较此前一周的日均销量增长了80%；阿里巴巴价值10亿元的湖北小龙虾采购、价值5000万元的秭归脐橙采购正在有序推进；" \
+       "今日发布的湖北农货“安心购”标准将解决消费者对湖北农货“不敢买”的顾虑。张勇说：“没有一个春天不会到来。期待武汉全面恢复之日，和大家一起共登黄鹤楼，再吃热干面！”"
+process_content(test)
+
+
+def split_file(path):
+    '''
+    split data by rull
+    '''
+
+    content = []
+
+    ind = []
+
+    count = 0
+    with open(path,'r',encoding='utf8') as f :
+        for line in f :
+            line = line.strip()
+            if len(line) < 1 or line.isspace() : continue
+            if "【编辑" in line and len(line) < 10 :
+                ind.append(count)
+            count += 1
+            content.append(line)
+
+    news = []
+    for i in range(len(ind)):
+        l = ind[i]
+        if i+1 > len(ind) -1 :
+            dire = content[l]
+            doc = content[l+1:]
+        else:
+            dire = content[l]
+            doc = content[l+1:ind[i+1]]
+
+        url,title,datetime,words = process_content(''.join(doc))
+
+        new = {'director':process_director(dire),'url':url,'title':title,'datetime':datetime,'words':words}
+        news.append(new)
+    return news
+
+from py2neo import Graph, Node, Relationship
+
+##连接neo4j数据库，输入地址、用户名、密码
+graph = Graph('http://localhost:7474', username='jd_data', password='123456')
+
+def data_for_graph(new):
+
+    '''
+    upload data to neo4j database with username 'jd_data' and password '123456'(which you can modify them based on your situation)
+    '''
+    
+    #build basic node
+    test_node_1 = Node('new url', name=new['url'])
+    test_node_2 = Node('new title', name=new['title'])
+    test_node_3 = Node('new date', name=new['datetime'])
+    graph.create(test_node_1)
+    graph.create(test_node_2)
+    graph.create(test_node_3)
+    
+    words = new['words']
+  
+    #build relation between nodes and save them in a list of "node_list"
+    node_list = []
+    node_link= Relationship(test_node_2, 'url', test_node_1)
+    node_title = Relationship(test_node_2, 'title', test_node_3)
+    
+    node_list.append(node_link)
+    node_list.append(node_title)
+    for w in words:
+        word_node = Node('key words',name=w)
+        graph.create(word_node)
+        node_list.append(Relationship(test_node_2,'key_words',word_node))
+
+
+    for n in node_list:
+        graph.create(n)
+
+
+def main():
+    path = 'data_new.txt'
+    news = split_file(path)
+    count = 0
+    for new in news:
+        #if count > 3 :
+        #    break
+        data_for_graph(new)
+        count += 1
+if __name__ == '__main__':
+    main()
+
+
