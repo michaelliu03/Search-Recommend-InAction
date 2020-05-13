@@ -15,11 +15,6 @@ from  pypinyin import *
 
 
 
-
-
-
-
-
 def build_model():
     word_dict = {}
     count = 0

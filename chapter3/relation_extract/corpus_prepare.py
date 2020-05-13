@@ -18,7 +18,7 @@ import xml.etree.ElementTree as ET
 from .utils import *
 
 
-dir_root = "D:\\coding\\self-project\\Search-Recommend-InAction\\Search-Recommend-InAction\\data\\charpter2\\news-2020-04-26-part2-2020-04-26-part1-2020-04-26-2020-04-20\\"
+dir_root = "D:\\coding\\self-project\\Search-Recommend-InAction\\Search-Recommend-InAction\\data\\chapter2\\news-2020-0503-part1-2020-04-26-part2-2020-04-26-part1-2020-04-26-2020-04-20\\"
 stop_words = set()
 
 def read_stopwords(file_path):
@@ -86,7 +86,7 @@ def pasing_ch(content,corpusid,numid):#传入文本的ID，行数，及文本
 if __name__ =="__main__":
     print("begin......")
     # step 1
-    #filepath = os.path.dirname("D:\\coding\\self-project\\Search-Recommend-InAction\\Search-Recommend-InAction\\data\\charpter2\\news-2020-04-26-part2-2020-04-26-part1-2020-04-26-2020-04-20\\")
+    #filepath = os.path.dirname("D:\\coding\\self-project\\Search-Recommend-InAction\\Search-Recommend-InAction\\data\\chapter2\\news-2020-0503-part1-2020-04-26-part2-2020-04-26-part1-2020-04-26-2020-04-20\\")
     #savefilename= 'news_corpus.txt'
     #opt_corpus(filepath)
     # step 2

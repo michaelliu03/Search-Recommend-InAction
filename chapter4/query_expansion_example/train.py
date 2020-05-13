@@ -11,8 +11,7 @@ def main():
     sentences = word2vec.LineSentence(corpus_file_path)
     model = word2vec.Word2Vec(sentences, size=250)
     #保存模型
-    model.save("word2vec.model")
-
+    model.save("./word2vec.model")
 
 if __name__ == "__main__":
     main()

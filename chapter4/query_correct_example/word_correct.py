@@ -6,12 +6,13 @@
 # @Desc: this code is ....
 
 from  pypinyin import *
+import codecs
 
 class WordCorrect:
      def __init__(self):
-         self.char_path = 'char.txt'
+         self.char_path = 'char.utf8'
          self.model_path = 'query_correct.model'
-         self.charlist = [word.strip() for word in open(self.char_path,'r','utf-8') if word.strip()]
+         self.charlist = [word.strip() for word in codecs.open(self.char_path,'r','utf-8') if word.strip()]
          self.pinyin_dict = self.load_model(self.model_path)
 
 
