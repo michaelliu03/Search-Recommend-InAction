@@ -35,21 +35,21 @@ def data_convert(type):
                 print('row %d - %f seconds' % (current_row,time.time() - start_time))
     print('Done loading data - %f seconds' % (time.time() - start_time))
     label_list = np.asarray(label_list,dtype=int)
-    label_list = np.asarray(label_list, dtype=int)
+
     features = np.asarray(features, dtype=float)
     query_ids = np.asarray(features[:, 0], dtype=int)
     features = features[:, 1:]
     np_file_directory = 'data/np_' + type + '_files'
     np.save(os.path.join(np_file_directory, LABEL_LIST), label_list)
     with open(os.path.join(np_file_directory, LABEL_LIST), "w") as dump_f_1:
-        json.dump(label_list,dump_f_1)
+        json.dump(label_list.tolist(),dump_f_1)
     np.save(os.path.join(np_file_directory, FEATURES), features)
     with open(os.path.join(np_file_directory, FEATURES),"w") as dump_f_2:
-        json.dump(features,dump_f_2)
+        json.dump(features.tolist(),dump_f_2)
 
     np.save(os.path.join(np_file_directory, QUERY_IDS), query_ids)
     with open(os.path.join(np_file_directory, QUERY_IDS), "w") as dump_f:
-         json.dump(query_ids,dump_f)
+         json.dump(query_ids.tolist(),dump_f)
 
 
 
