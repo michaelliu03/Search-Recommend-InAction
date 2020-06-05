@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #-*-coding:utf-8-*-
-# @File:train.py
+# @File:lr_train.py
 # @Author: Michael.liu
 # @Date:2020/6/3 17:42
 # @Desc: this code is avaza_ctr
@@ -26,7 +26,8 @@ def save_model(clf):
     joblib.dump(clf,'lr_classifier.pkl')
 
 train_data = load_df('avazu_ctr/train_sample.csv')
-X_train,X_test,y_train,y_test = train_test_split(train_data[0::,1::],train_data[0::,0],test_size=0.3,random_state=0)
+dt = train_data.values
+X_train,X_test,y_train,y_test = train_test_split(dt[0::, 1::], dt[0::, 0],test_size=0.3,random_state=0)
 
 classifier =  classify(LogisticRegression,X_train,y_train)
 predictions = classifier.predict(X_test)

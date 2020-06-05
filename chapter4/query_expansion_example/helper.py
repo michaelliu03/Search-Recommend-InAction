@@ -10,7 +10,8 @@ from pyhanlp import *
 import xml.etree.ElementTree as ET
 
 content_list = []
-def read_file_list(inpufile):
+
+def read_file_list(inpufile,seg):
     dir_list = []
     file_list = []
 
@@ -27,7 +28,7 @@ def read_file_list(inpufile):
             xml_root = ET.parse(filepath).getroot()
             title = xml_root.find('title').text
             body = xml_root.find('body').text
-            content = "".join(title + '。' + body)
+            content = title + seg + body #这里分割
             content_list.append(content)
 
 
@@ -71,7 +72,7 @@ def load_d_cut(content_list,out_file):
 if __name__ == "__main__":
     print("......start.....")
     file_path = "../../data/chapter2/"
-    read_file_list(file_path)
-    load_d_cut(content_list,'./jobtitle_title_JD_seg.txt')
+    read_file_list(file_path,'↑')
+    load_d_cut(content_list,'./title_content_seg.txt')
     print("......finished!.......")
     #load_d_cut("","./outfile.csv")

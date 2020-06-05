@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #-*-coding:utf-8-*-
-# @File:train.py
+# @File:lr_train.py
 # @Author: Michael.liu
 # @Date:2019/2/12
 # @Desc: Bilstm + CRF model 提取实体

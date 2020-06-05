@@ -18,4 +18,5 @@ def clean_df(df,training=True):
 def load_df(filename, training=True,**csv_options):
     df = pd.read_csv(filename,header=0,**csv_options)
     df = clean_df(df,training=training)
+
     return df

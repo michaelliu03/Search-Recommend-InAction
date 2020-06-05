@@ -7,7 +7,7 @@ import tensorflow as tf
 from .BILSTM_CRF import BILSTM_CRF
 from .helper import Helper
 
-# python train.py train.in model -v validation.in -c char_emb -e 10 -g 2
+# python lr_train.py train.in model -v validation.in -c char_emb -e 10 -g 2
 
 parser = argparse.ArgumentParser()
 parser.add_argument("train_path", help="the path of the train file")
