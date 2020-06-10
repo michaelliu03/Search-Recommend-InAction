@@ -26,13 +26,15 @@ def clean_df(df,training=True):
 
 def load_df(filename, training=True,**csv_options):
     df = pd.read_csv(filename,header=0,**csv_options)
-<<<<<<< HEAD:chapter12/avazu_ctr/utils.py
+
     #df = clean_df(df,training=training)
     df = select_df(df,training=training)
     return df
 
-=======
-    df = clean_df(df,training=training)
-
+def select_df(df,training=True):
+    features = pd.read_csv('feature.csv')
+    x_columns = features.head(30)['feature'].tolist()
+    df = df[x_columns]
+    if training:
+        df = df.drop(['id'], axis=1)
     return df
->>>>>>> parent of 9094bb6... dt model:chapter12/utils.py
