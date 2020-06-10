@@ -6,6 +6,15 @@
 # @Desc: this code is ....
 import pandas as pd
 
+# tf_preprocess
+from __future__ import print_function
+from __future__ import absolute_import
+from __future__ import division
+import pickle as pkl
+import numpy as np
+import tensorflow as tf
+from scipy.sparse import coo_matrix
+
 def clean_df(df,training=True):
     df = df.drop(
         ['site_id', 'app_id','device_id','device_ip','site_domain','site_category','app_domain', 'app_category'],
@@ -17,6 +26,13 @@ def clean_df(df,training=True):
 
 def load_df(filename, training=True,**csv_options):
     df = pd.read_csv(filename,header=0,**csv_options)
+<<<<<<< HEAD:chapter12/avazu_ctr/utils.py
+    #df = clean_df(df,training=training)
+    df = select_df(df,training=training)
+    return df
+
+=======
     df = clean_df(df,training=training)
 
     return df
+>>>>>>> parent of 9094bb6... dt model:chapter12/utils.py

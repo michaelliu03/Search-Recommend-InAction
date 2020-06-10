@@ -12,6 +12,10 @@ from sklearn import preprocessing
 from sklearn.model_selection import StratifiedShuffleSplit
 
 
+
+
+
+
 tr_csv_all_path = 'avazu_ctr/train.csv'
 tr_csv_path = 'avazu_ctr/train_sample.csv'
 ts_csv_path = 'avazu_ctr/test.csv'
