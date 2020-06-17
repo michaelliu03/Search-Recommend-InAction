@@ -6,7 +6,7 @@
 # @Desc: this code is ....
 
 import tensorflow as tf
-from helper import *
+from .helper import *
 
 TRIGRAM_D = 100
 # negative sample
@@ -135,15 +135,13 @@ class DssmModel(object):
             # Optimizer
             self.train_step = tf.train.AdamOptimizer(conf.learning_rate).minimize(self.loss)
 
-        # with tf.name_scope("train_op"):
-        #     # 定义优化器
-        #     optimizer = self.get_optimizer()
-        #
-        #     trainable_params = tf.trainable_variables()
-        #     gradients = tf.gradients(self.loss, trainable_params)
-        #     # 对梯度进行梯度截断
-        #     clip_gradients, _ = tf.clip_by_global_norm(gradients, self.config["max_grad_norm"])
-        #     self.train_op = optimizer.apply_gradients(zip(clip_gradients, trainable_params))
+        with tf.name_scope('vali'):
+            self.average_loss = tf.placeholder(tf.float32)
+            self.loss_summary = tf.summary.scalar('average_loss', self.average_loss)
+
+        with tf.name_scope('Train'):
+            self.train_average_loss = tf.placeholder(tf.float32)
+            self.train_loss_summary = tf.summary.scalar('train_average_loss', self.train_average_loss)
 
     def variable_summaries(self, var, name):
         """Attach a lot of summaries to a Tensor."""
