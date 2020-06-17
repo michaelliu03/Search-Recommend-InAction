@@ -6,5 +6,6 @@
   "learning_rate": 1e-3,
   "summaries_dir": "./Summaries/",
   "vocab_path": "./data/vocab.txt",
-  "optimization": "adam"
+  "optimization": "adam",
+  "train_file": "./data/oppo_round1_train_20180929.txt"
 }

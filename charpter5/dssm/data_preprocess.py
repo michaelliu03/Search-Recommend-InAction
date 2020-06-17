@@ -98,9 +98,12 @@ def get_data_siamese_rnn(file_path):
     gen datasets, convert word into word ids.
     :param file_path:
     :return: [[query, pos sample, 4 neg sample]], shape = [n, 6]
+    : add the 文件
     """
     data_arr = []
+
     with open(file_path, encoding='utf8') as f:
+
         for line in f.readlines():
             spline = line.strip().split('\t')
             if len(spline) < 4:
