@@ -53,5 +53,5 @@ class Lr_model(object):
 
     # 加载模型并进行预测
     def infer(self,vali_df):
-        print("")
+        print("this is infor")
 
