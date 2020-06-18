@@ -1,0 +1,11 @@
+{
+  "adt_train_file":"./",
+  "adt_vali_file": "./",
+  "adt_test_file": "./",
+  "adt_max_depth": 2,
+  "adt_min_samples_split": 20,
+  "adt_min_samples_leaf": 5,
+  "adt_algorithm": "SAMME",
+  "adt_n_estimators": 300,
+  "adt_learning_rate": 0.8
+}

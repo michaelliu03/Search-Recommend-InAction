@@ -42,8 +42,8 @@ class LrModel(object):
         :return:
         '''
 
-        print(self.train_df)
-        print(feature_head)
+        #print(self.train_df)
+        #print(feature_head)
         x_train = self.train_df[feature_head]
         y_train = self.train_df[target_head]
 
