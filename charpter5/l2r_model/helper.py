@@ -5,6 +5,27 @@
 # @Date:2020/6/17 14:51
 # @Desc: this code is ....
 
+def data_for_bi(root,path,head):
+    o = open(root + 'format_' + path,'w',encoding='utf8')
+    o.write(','.join(head) + '\n')
+    count = 0
+    with open(root + path,'r',encoding='utf8') as f:
+        for line in f :
+            line = line.strip().split()
+
+            #print(line[0] == '0')
+            if line[0] != '0' and line[0] != '4' : continue
+
+            for i in range(1,len(line)):
+                line[i] = line[i].split(':')[1]
+            if line[0] == '4' :
+                line[0] = '1'
+
+            print('write')
+            o.write(','.join(line) + '\n')
+
+
+
 def load_head(path):
     '''
     :param path: path of head explaination

@@ -17,7 +17,7 @@ print(head)
 if __name__ == '__main__':
     #global head
     print("......开始训练.....")
-    lr_model = Lr_model('./format_train.txt','./format_vali.txt','./format_vali.txt')
+    lr_model = LrModel('./format_train.txt','./format_vali.txt','./format_vali.txt')
     lr_model.load_train_data(head)
     lr_model.load_test_data(head)
     lr_model.train(head[2:],head[0])

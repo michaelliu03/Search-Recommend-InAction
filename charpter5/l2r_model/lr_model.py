@@ -12,7 +12,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.externals import joblib
 
 
-class Lr_model(object):
+class LrModel(object):
     train_df = None
     test_df = None
     vali_df = None
