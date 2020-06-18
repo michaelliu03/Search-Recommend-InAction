@@ -5,6 +5,22 @@
 # @Date:2020/6/17 14:51
 # @Desc: this code is ....
 
+def load_head(path):
+    '''
+    :param path: path of head explaination
+    :return:  list  of head
+    '''
+
+    head = []
+    with open(path,'r',encoding='utf8') as f:
+        for line in f :
+            if '\t' not in line: continue
+            line = line.strip().split('\t')
+            if len(line) != 2 : continue
+            head.append(line[1])
+
+    return head
+
 def data_process(root,path):
     '''
 

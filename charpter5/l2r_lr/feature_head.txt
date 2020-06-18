@@ -1,0 +1,166 @@
+0	relevent
+1	qid
+2	covered query term number:body
+3	covered query term number:anchor
+4	covered query term number:title
+5	covered query term number:url
+6	covered query term number:whole document
+
+7	covered query term ratio:body
+8	covered query term ratio:anchor
+9	covered query term ratio:title
+10	covered query term ratio:url
+11	covered query term ratio:whole document
+
+12	stream length:body
+13	stream length:anchor
+14	stream length:title
+15	stream length:url
+16	stream length:whole document
+
+17	IDF(Inverse document frequency):body
+18	IDF(Inverse document frequency):anchor
+19	IDF(Inverse document frequency):title
+20	IDF(Inverse document frequency):url
+21	IDF(Inverse document frequency):whole document
+
+22	sum of term frequency:body
+23	sum of term frequency:anchor
+24	sum of term frequency:title
+25	sum of term frequency:url
+26	sum of term frequency:whole document
+
+27	min of term frequency:body
+28	min of term frequency:anchor
+29	min of term frequency:title
+30	min of term frequency:url
+31	min of term frequency:whole document
+
+32	max of term frequency:body
+33	max of term frequency:anchor
+34	max of term frequency:title
+35	max of term frequency:url
+36	max of term frequency:whole document
+
+37	mean of term frequency:body
+38	mean of term frequency:anchor
+39	mean of term frequency:title
+40	mean of term frequency:url
+41	mean of term frequency:whole document
+
+42	variance of term frequency:body
+43	variance of term frequency:anchor
+44	variance of term frequency:title
+45	variance of term frequency:url
+46	variance of term frequency:whole document
+
+47	sum of stream length normalized term frequency:body
+48	sum of stream length normalized term frequency:anchor
+49	sum of stream length normalized term frequency:title
+50	sum of stream length normalized term frequency:url
+51	sum of stream length normalized term frequency:whole document
+
+52	min of stream length normalized term frequency:body
+53	min of stream length normalized term frequency:anchor
+54	min of stream length normalized term frequency:title
+55	min of stream length normalized term frequency:url
+56	min of stream length normalized term frequency:whole document
+
+57	max of stream length normalized term frequency:body
+58	max of stream length normalized term frequency:anchor
+59	max of stream length normalized term frequency:title
+60	max of stream length normalized term frequency:url
+61	max of stream length normalized term frequency:whole document
+
+62	mean of stream length normalized term frequency:body
+63	mean of stream length normalized term frequency:anchor
+64	mean of stream length normalized term frequency:title
+65	mean of stream length normalized term frequency:url
+66	mean of stream length normalized term frequency:whole document
+
+67	variance of stream length normalized term frequency:body
+68	variance of stream length normalized term frequency:anchor
+69	variance of stream length normalized term frequency:title
+70	variance of stream length normalized term frequency:url
+71	variance of stream length normalized term frequency:whole document
+
+72	sum of tf*idf:body
+73	sum of tf*idf:anchor
+74	sum of tf*idf:title
+75	sum of tf*idf:url
+76	sum of tf*idf:whole document
+
+77	min of tf*idf:body
+78	min of tf*idf:anchor
+79	min of tf*idf:title
+80	min of tf*idf:url
+81	min of tf*idf:whole document
+
+82	max of tf*idf:body
+83	max of tf*idf:anchor
+84	max of tf*idf:title
+85	max of tf*idf:url
+86	max of tf*idf:whole document
+
+87	mean of tf*idf:body
+88	mean of tf*idf:anchor
+89	mean of tf*idf:title
+90	mean of tf*idf:url
+91	mean of tf*idf:whole document
+
+92	variance of tf*idf:body
+93	variance of tf*idf:anchor
+94	variance of tf*idf:title
+95	variance of tf*idf:url
+96	variance of tf*idf:whole document
+
+97	boolean model:body
+98	boolean model:anchor
+99	boolean model:title
+100	boolean model:url
+101	boolean model:whole document
+
+102	vector space model:body
+103	vector space model:anchor
+104	vector space model:title
+105	vector space model:url
+106	vector space model:whole document
+
+107	BM25:body
+108	BM25:anchor
+109	BM25:title
+110	BM25:url
+111	BM25:whole document
+
+Language model approach for information retrieval (IR) with absolute discounting smoothing
+112	LMIR.ABS:body
+113	LMIR.ABS:anchor
+114	LMIR.ABS:title
+115	LMIR.ABS:url
+116	LMIR.ABS:whole document
+
+Language model approach for IR with Bayesian smoothing using Dirichlet priors
+117	LMIR.DIR:body
+118	LMIR.DIR:anchor
+119	LMIR.DIR:title
+120	LMIR.DIR:url
+121	LMIR.DIR:whole document
+
+Language model approach for IR with Jelinek-Mercer smoothing
+122	LMIR.JM:body
+123	LMIR.JM:anchor
+124	LMIR.JM:title
+125	LMIR.JM:url
+126	LMIR.JM:whole document
+
+Number of slash in URL
+127	Length of URL
+128	Inlink number
+129	Outlink number
+130	PageRank
+131	SiteRank
+132	QualityScore
+133	QualityScore2
+134	Query-url click count
+135	url click count
+136	url dwell time
