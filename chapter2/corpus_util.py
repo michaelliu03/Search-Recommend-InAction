@@ -29,9 +29,6 @@ def read_stop_words(filepath):
     stop_words = set(words.split('\n'))
     #print(stop_words)
 
-
-
-
 def is_number(s):
     try:
         float(s)
@@ -62,7 +59,6 @@ def segment_py(content):
         if term_word == " ":
             continue
         else:
-
            if  is_number(term_word) ==True and term_word not in stop_words:
                 continue
            if term_nature not in filter_term_nature:
@@ -92,8 +88,6 @@ def corpusHandler(dirname,filename):
     output_data.close()
 
 
-
-
 if __name__ =="__main__":
     print("......start......")
     # step 1: 读取停用词
@@ -103,9 +97,6 @@ if __name__ =="__main__":
     corpus_file_path = u'./data/'
     new_file_out = u'./lda_prepare.csv'
     corpusHandler(corpus_file_path,new_file_out)
-
-
-
 
     print("......finished......")
 

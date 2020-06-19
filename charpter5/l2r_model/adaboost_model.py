@@ -58,7 +58,7 @@ class AdaBoostModel(object):
         print('Accuracy of Adaboost Classifier:%f' % bdt.score(x_test, y_test))
         joblib.dump(bdt, 'gen_bdt.pkl')
         self.model = bdt
-        print('cost the time',(time.time() - t_start))
+        print('cost the time %s' % (time.time() - t_start))
 
     def infer(self, feature_head, target_head, model_path=None):
         t_start = time.time()

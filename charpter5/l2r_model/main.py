@@ -11,14 +11,19 @@ import time
 
 head_path = './feature_head.txt'
 head = load_head(head_path)
-
 print(head)
+
+
+
+
+
 
 if __name__ == '__main__':
     #global head
+    t_start = time.time()
     print("......开始训练.....")
     lr_model = LrModel('./format_train.txt','./format_vali.txt','./format_vali.txt')
     lr_model.load_train_data(head)
     lr_model.load_test_data(head)
     lr_model.train(head[2:],head[0])
-    print("......训练结束.....")
+    print("......训练结束.....,共耗费 %s " % (time.time()-t_start))
