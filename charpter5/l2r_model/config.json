@@ -1,11 +1,21 @@
 {
-  "adt_train_file":"./",
-  "adt_vali_file": "./",
-  "adt_test_file": "./",
+  "train_file":"./format_train.txt",
+  "vali_file": "./format_vali.txt",
+  "test_file": "./format_test.txt",
   "adt_max_depth": 2,
   "adt_min_samples_split": 20,
   "adt_min_samples_leaf": 5,
   "adt_algorithm": "SAMME",
   "adt_n_estimators": 300,
-  "adt_learning_rate": 0.8
+  "adt_learning_rate": 0.8,
+  "n_estimators": 10,
+  "max_depth": "None",
+  "min_samples_split": 2,
+  "min_samples_leaf": 1,
+  "max_leaf_nodes": "None",
+  "bootstrap": "True",
+  "n_jobs" : 1,
+  "min_weight_fraction_leaf" : 0,
+  "criterion" : "mse" ,
+  "random_state" : "None"
 }
