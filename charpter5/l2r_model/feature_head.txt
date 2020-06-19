@@ -153,14 +153,14 @@ Language model approach for IR with Jelinek-Mercer smoothing
 125	LMIR.JM:url
 126	LMIR.JM:whole document
 
-Number of slash in URL
-127	Length of URL
-128	Inlink number
-129	Outlink number
-130	PageRank
-131	SiteRank
-132	QualityScore
-133	QualityScore2
-134	Query-url click count
-135	url click count
-136	url dwell time
+127	Number of slash in URL
+128	Length of URL
+129	Inlink number
+130	Outlink number
+131	PageRank
+132	SiteRank
+133	QualityScore
+134	QualityScore2
+135	Query-url click count
+136	url click count
+137	url dwell time

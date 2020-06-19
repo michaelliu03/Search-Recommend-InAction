@@ -24,13 +24,13 @@ class LrModel(object):
         self.vali_file = valifile
 
     def load_train_data(self, names):
-        self.train_df = pd.read_csv(self.train_file, names=names, sep=',')
+        self.train_df = pd.read_csv(self.train_file, header=0, sep=',')
 
     def load_vali_data(self, names):
-        self.vali_df = pd.read_csv(self.vali_file, names=names, sep=',')
+        self.vali_df = pd.read_csv(self.vali_file,header=0, sep=',')
 
     def load_test_data(self, names):
-        self.test_df = pd.read_csv(self.test_file, names=names, sep=',')
+        self.test_df = pd.read_csv(self.test_file, header=0, sep=',')
 
     def train(self, feature_head, target_head):
         '''
