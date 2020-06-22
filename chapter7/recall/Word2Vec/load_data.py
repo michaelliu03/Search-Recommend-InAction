@@ -13,15 +13,20 @@ class LoadData(object):
 
     def load_data(self):
         dataset = []
+        iLineNum =0
         with open(self.datafile,'r',encoding='utf8') as f:
             for line in f.readlines():
-                title = line.strip().split('±±±±')[0]
-                content = line.strip().split('±±±±')[1]
-                print(line)
-                dataset.append(line)
+                iLineNum += 1
+                line = line.strip().replace('±±±±',' ')
+                dataset.append([word for word in line.split(' ') if 'nbsp' not in word and len(word) < 11])
         return dataset
 
 if __name__ == "__main__":
     print("....start....")
     loadData = LoadData('../../../data/chapter7/xml_data_process.txt')
-    loadData.load_data()
+    dataset = loadData.load_data()
+
+    for i in dataset:
+        print(i)
+    print(len(dataset))
+   #print(dataset)

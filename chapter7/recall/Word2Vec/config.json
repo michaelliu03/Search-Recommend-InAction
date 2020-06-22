@@ -1,0 +1,17 @@
+{
+  "is_cbow": true,
+  "is_skipgram": false,
+  "min_count": 5,
+  "batch_size": 200,
+  "embedding_size": 200,
+  "cbow_window_size": 1,
+  "num_steps": 100000,
+  "num_sampled": 100,
+  "train_file_data": "./data.csv",
+  "cb_model_path": "./cbow_word2vec.bin",
+  "sk_model_path": "./skipgram_word2vec.bin",
+  "skipgram_window_size": 5,
+  "num_sampled":100
+
+
+}
