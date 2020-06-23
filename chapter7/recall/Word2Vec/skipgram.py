@@ -11,6 +11,8 @@ import random
 import numpy as np
 import tensorflow as tf
 from .load_data import *
+import argparse
+import json
 
 class SkipGram:
 
@@ -169,3 +171,15 @@ class SkipGram:
         vocabulary_size = len(count)
         final_embeddings = self.train_wordvec(vocabulary_size, self.batch_size, self.embedding_size, self.window_size, self.num_sampled, self.num_steps, data)
         self.save_embedding(final_embeddings, reverse_dictionary)
+
+if __name__ == "__main__":
+    print("....begin....")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--config_path", help="config path of model")
+    args = parser.parse_args()
+    with open(args.config_path, "r", encoding="utf8") as fr:
+        config = json.load(fr)
+
+    cbow = CBOW(config)
+    cbow.train()
+    print("....end....")

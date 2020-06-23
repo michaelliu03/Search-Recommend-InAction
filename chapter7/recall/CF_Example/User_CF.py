@@ -28,39 +28,39 @@ def read_data(file_path,sparkContext):
     print("read data finished !")
     return  train_rdd,test_rdd
 
-def calc_user_sim(train_rdd):
-    #Get Item-User inverse tabel
-    print("building item-user inverse table")
-
-
-    good2users = train_rdd \
-        .map(lambda (user, goods): (goods, user)) \
-        .groupByKey(numPartitions=40) \
-        .map(lambda (goods, user_list): (goods, [u for u in user_list]))
-
-    # count popularity
-    goods_popular = good2users\
-        .map(lambda (goods,user_list):(goods,len(user_list)))
-
-    all_goods_count = good2users.count()
-
-    user_co_rated_matrix = good2users\
-        .map(lambda (goods,user_list):get_user_sim_matrix(goods,user_list))\
-        .flatMap(lambda uv_list:uv_list)\
-        .map(lambda (u,v):((u,v),1))\
-        .reduceByKey(add,numPartitions=40)
-    print('build goods-users inverse table succ')
-
-    view_num_map = train_rdd\
-        .map(lambda (user,goods):(user,1))\
-        .reduceByKey(add,numPartitions=40)\
-        .collectAsMap()
-
-    user_sim_matrix = user_co_rated_matrix\
-        .map(lambda ((u,v),count):((u,v).count
-          /sqrt(view_num_map[u]*view_num_map[v])))
-    print("calculate user user_sim_matrix ")
-    return user_sim_matrix,goods_popular,all_goods_count
+# def calc_user_sim(train_rdd):
+#     #Get Item-User inverse tabel
+#     print("building item-user inverse table")
+#
+#
+#     good2users = train_rdd \
+#         .map(lambda (user, goods): (goods, user)) \
+#         .groupByKey(numPartitions=40) \
+#         .map(lambda (goods, user_list): (goods, [u for u in user_list]))
+#
+#     # count popularity
+#     goods_popular = good2users\
+#         .map(lambda (goods,user_list):(goods,len(user_list)))
+#
+#     all_goods_count = good2users.count()
+#
+#     user_co_rated_matrix = good2users\
+#         .map(lambda (goods,user_list):get_user_sim_matrix(goods,user_list))\
+#         .flatMap(lambda uv_list:uv_list)\
+#         .map(lambda (u,v):((u,v),1))\
+#         .reduceByKey(add,numPartitions=40)
+#     print('build goods-users inverse table succ')
+#
+#     view_num_map = train_rdd\
+#         .map(lambda (user,goods):(user,1))\
+#         .reduceByKey(add,numPartitions=40)\
+#         .collectAsMap()
+#
+#     user_sim_matrix = user_co_rated_matrix\
+#         .map(lambda ((u,v),count):((u,v).count
+#           /sqrt(view_num_map[u]*view_num_map[v])))
+#     print("calculate user user_sim_matrix ")
+#     return user_sim_matrix,goods_popular,all_goods_count
 
 
 def get_user_sim_matrix(goods,user_list):
@@ -92,4 +92,4 @@ if __name__ == '__main__':
     sc = SparkContext(args.master,'UserCF Spark Version')
 
     train_set,test_set = read_data(file_path=args.input,sparkContext=sc)
-    user_similarity_matrix, goods_popular_count, goods_total_count = calc_user_sim(train_rdd=train_set)
+    #user_similarity_matrix, goods_popular_count, goods_total_count = calc_user_sim(train_rdd=train_set)
