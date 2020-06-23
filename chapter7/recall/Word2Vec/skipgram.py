@@ -180,6 +180,6 @@ if __name__ == "__main__":
     with open(args.config_path, "r", encoding="utf8") as fr:
         config = json.load(fr)
 
-    cbow = CBOW(config)
-    cbow.train()
+    skipgram = SkipGram(config)
+    skipgram.train()
     print("....end....")
