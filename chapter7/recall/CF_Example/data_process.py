@@ -7,6 +7,10 @@
 import pandas as pd
 import numpy as np
 import argparse
+from pyspark.sql import SparkSession
+from pyspark import SparkConf, SparkContext
+import pyspark.sql.functions as F
+from pyspark.sql.types import *
 
 def data_preprocess(filepath):
    fw = open("./UserBehavior_pre.csv", "w", encoding='utf8')
@@ -31,12 +35,38 @@ def data_preprocess(filepath):
    fw.close()
 
 
+def rate_score(str):
+    score = 0.0
+    if str == "buy":
+        score = 5.0
+    elif str == "cart":
+        score = 3.0
+    elif str == "pv":
+        score = 2.0
+    elif str == "fav":
+        score = 1.0
+    else:
+        score = 0.0
+    return score
+
+def preprocess():
+    spark = SparkSession.\
+        builder.\
+        appName("data_preprocess").\
+        getOrCreate()
+    ratings = spark.\
+        read.\
+        load("./UserBehavior.csv", format="csv", sep=",", inferSchema="true", header="false")
+    # convert to a UDF Function by passing in the function and return type of function
+    udfsomefunc = F.udf(rate_score, DoubleType())
+    rating_new = ratings.withColumn("rating_new", udfsomefunc("rating"))
+    rating_new.show(20)
+    rating_new_2 = rating_new.select([c for c in rating_new.columns if c in ['_c0', '_c1', '_c2', 'rating_new', '_c4']])
+    rating_new_2.\
+        repartition(1).\
+        write.csv("file:///data1/jupyter/liuyu5/c7/Userbehavior_Pre.csv",mode="overwrite")
+
 if __name__ == "__main__":
     print("....begin....")
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--filepath", help="file path of model")
-    args = parser.parse_args()
-    data_preprocess(args.filepath)
-
-
+    preprocess()
     print("....end....")
