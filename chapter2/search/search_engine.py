@@ -5,13 +5,15 @@
 # @Date:2020/4/20 19:12
 # @Desc: This code is SearchEngine
 
-import jieba
 import math
 import operator
 import sqlite3
 import configparser
 from datetime import *
 import os
+
+from chapter2.SegmentExample import pyHanlpSeg
+
 
 class SearchEngine:
     stop_words = set()
@@ -80,7 +82,7 @@ class SearchEngine:
         return (c.fetchone())
 
     def result_by_BM25(self, sentence):
-        seg_list = jieba.lcut(sentence, cut_all=False)
+        seg_list = pyHanlpSeg(sentence)
         n, cleaned_dict = self.clean_list(seg_list)
         BM25_scores = {}
         for term in cleaned_dict.keys():
@@ -108,7 +110,7 @@ class SearchEngine:
             return 1, BM25_scores
 
     def result_by_time(self, sentence):
-        seg_list = jieba.lcut(sentence, cut_all=False)
+        seg_list = pyHanlpSeg(sentence)
         n, cleaned_dict = self.clean_list(seg_list)
         time_scores = {}
         for term in cleaned_dict.keys():
@@ -133,7 +135,7 @@ class SearchEngine:
             return 1, time_scores
 
     def result_by_hot(self, sentence):
-        seg_list = jieba.lcut(sentence, cut_all=False)
+        seg_list = pyHanlpSeg(sentence)
         n, cleaned_dict = self.clean_list(seg_list)
         hot_scores = {}
         for term in cleaned_dict.keys():
