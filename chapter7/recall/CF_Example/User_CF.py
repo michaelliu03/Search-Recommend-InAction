@@ -9,6 +9,9 @@ from pyspark.sql import SparkSession
 from pyspark import SparkConf, SparkContext
 import pyspark.sql.types as T
 
+def UserCF():
+    print("...begin...")
+
 
 
 if __name__ == '__main__':

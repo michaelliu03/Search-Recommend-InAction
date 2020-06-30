@@ -61,7 +61,7 @@ def preprocess():
     udfsomefunc = F.udf(rate_score, DoubleType())
     rating_new = ratings.withColumn("rating_new", udfsomefunc("rating"))
     rating_new.show(20)
-    rating_new_2 = rating_new.select([c for c in rating_new.columns if c in ['_c0', '_c1', '_c2', 'rating_new', '_c4']])
+    rating_new_2 = rating_new.select([c for c in rating_new.columns if c in ['_c0', '_c1', '_c2', '_c4', 'rating_new']])
     rating_new_2.\
         repartition(1).\
         write.csv("file:///data1/jupyter/liuyu5/c7/Userbehavior_Pre.csv",mode="overwrite")
