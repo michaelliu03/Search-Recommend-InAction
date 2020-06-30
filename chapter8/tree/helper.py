@@ -6,6 +6,7 @@
 # @Desc: this code is ....
 
 
+
 def load_head(path):
     '''
     :param path: path of head explaination
@@ -16,6 +17,7 @@ def load_head(path):
     with open(path,'r',encoding='utf8') as f:
         for line in f :
             if '\t' not in line: continue
+            line = line.replace(':','=')
             line = line.strip().split('\t')
             if len(line) != 2 : continue
             head.append(line[1])
