@@ -48,7 +48,7 @@ class DecisionTreeModel(object):
 
         clf = DecisionTreeClassifier(criterion=self.criterion)
         clf.fit(X_train, y_train)
-        print('Accuracy of Adaboost Classifier:%f' % bdt.score(X_test, y_test))
+        print('Accuracy of desicison_tree Classifier:%f' % clf.score(X_test, y_test))
         joblib.dump(clf, 'gen_dt.pkl')
         self.model = clf
         print('cost the time %s' % (time.time() - t_start))

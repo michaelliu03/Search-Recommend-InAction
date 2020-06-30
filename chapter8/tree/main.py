@@ -8,6 +8,7 @@
 
 from .helper import *
 from .decisiontree_model import *
+from .gbdt_lr_model import *
 import time
 import argparse
 
@@ -24,9 +25,13 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--config_path", help="config path of model")
     args = parser.parse_args()
-    decisiontTree_model = DecisionTreeModel(args)
-    decisiontTree_model.load_train_data(head)
-    decisiontTree_model.load_test_data(head)
-    decisiontTree_model.train(head[2:],head[0])
+    # decisiontTree_model = DecisionTreeModel(args)
+    # decisiontTree_model.load_train_data(head)
+    # decisiontTree_model.load_test_data(head)
+    # decisiontTree_model.train(head[2:],head[0])
+    gbdt_model = GBDT_LR_MODEl(args)
+    gbdt_model.load_train_data(head)
+    gbdt_model.load_test_data(head)
+    gbdt_model.train(head[0:],head[0])
     print("......训练结束.....,共耗费 %s " % (time.time()-t_start))
 
