@@ -70,6 +70,6 @@ class GBDT_LR_MODEl(object):
                         num_boost_round=100,
                         valid_sets=lgb_train)
 
-        print('Accuracy of gbdt_lr Classifier:%f' % gbm.score(X_test, y_test))
+        #print('Accuracy of gbdt_lr Classifier:%f' % gbm.score(X_test, y_test))
 
         gbm.save_model('model.txt')
