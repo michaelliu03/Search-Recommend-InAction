@@ -47,7 +47,7 @@ epochs = 31
 batch_size = 32
 
 config = {}
-config["lr"] = 0.001
+config["l2r_model"] = 0.001
 config["embedding_dim"] = 100
 config["sen_len"] = len(x_train[0])
 config["batch_size"] = batch_size

@@ -1,0 +1,6 @@
+{
+  "dt_train_file":"./format_train.txt",
+  "dt_vali_file": "./format_vali.txt",
+  "dt_test_file": "./format_test.txt",
+  "criterion": "gini"
+}

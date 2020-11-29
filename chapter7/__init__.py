@@ -4,3 +4,4 @@
 # @Author: Michael.liu
 # @Date:2019/2/12
 # @Desc: NLP Segmentation ToolKit - Hanlp Python Version
+# 本章需要讲解几个example，

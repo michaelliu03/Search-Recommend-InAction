@@ -11,7 +11,7 @@ import tensorflow as tf
 
 class BiLSTM_CRF(object):
     def __init__(self,config,embedding_pretrained,dropout_keep =1):
-        self.lr = config["lr"]
+        self.lr = config["l2r_model"]
         self.batch_size = config["batch"]
         self.embeding_size = config["embedding_size"]
         self.embeding_dim = config ["embedding_dim"]
