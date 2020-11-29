@@ -17,17 +17,18 @@ query_BS = 100
 BS = query_BS * NEG
 
 class DssmModel(object):
+
     def __init__(self,config ,init_size,batch_size=None,samples = None,is_trainging=True):
         self.config = config
         self.batch_size = config["batch_size"]
         self.vocab_map = load_vocab(self.config["vocab_path"])
         self.nwords = len(self.vocab_map)
-        self.use_stack_rnn= self.config["use_stack_rnn"]
+        #self.use_stack_rnn= self.config["use_stack_rnn"]
 
-        if self.use_stack_rnn == True:
-            self.hidden_size_rnn= self.config["hidden_size_rnn"]
-        self.optimization = self.config["optimization"]
-        self.max_seq_len = self.config["max_seq_len"]
+        # if self.use_stack_rnn == True:
+        #     self.hidden_size_rnn= self.config["hidden_size_rnn"]
+        # self.optimization = self.config["optimization"]
+        # self.max_seq_len = self.config["max_seq_len"]
 
 
         # create graph
@@ -48,6 +49,7 @@ class DssmModel(object):
             neg_seq_length = tf.placeholder(tf.int32, shape=[None], name='neg_sequence_length')
             on_train = tf.placeholder(tf.bool)
             drop_out_prob = tf.placeholder(tf.float32, name='drop_out_prob')
+
         with tf.name_scope('word_embeddings_layer'):
             _word_embedding = tf.get_variable(name="word_embedding_arr", dtype=tf.float32,
                                               shape=[self.nwords, TRIGRAM_D])
