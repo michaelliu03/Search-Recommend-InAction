@@ -19,30 +19,28 @@ BS = query_BS * NEG
 
 class DssmModel(object):
 
-<<<<<<< HEAD
-    def __init__(self,config ,init_size,batch_size=None,samples = None,is_trainging=True):
-=======
+
     def __init__(self, config):
->>>>>>> 4fdbd3363f2c9ad80c8963e6b25b3a8697ea6240
+
         self.config = config
         # self.batch_size = config["batch_size"]
         self.vocab_map = DssmData.load_vocab(self.config["vocab_path"])
         self.nwords = len(self.vocab_map)
-<<<<<<< HEAD
+
         #self.use_stack_rnn= self.config["use_stack_rnn"]
 
         # if self.use_stack_rnn == True:
         #     self.hidden_size_rnn= self.config["hidden_size_rnn"]
         # self.optimization = self.config["optimization"]
         # self.max_seq_len = self.config["max_seq_len"]
-=======
+
         self.use_stack_rnn = self.config["use_stack_rnn"]
 
         # if self.use_stack_rnn == True:
         self.hidden_size_rnn = self.config["hidden_size_rnn"]
         self.optimization = self.config["optimization"]
         self.max_seq_len = self.config["max_seq_len"]
->>>>>>> 4fdbd3363f2c9ad80c8963e6b25b3a8697ea6240
+
 
         # create graph
         self.model_structure()
@@ -54,25 +52,7 @@ class DssmModel(object):
 
         with tf.name_scope('input'):
             # 预测时只用输入query即可，将其embedding为向量。
-<<<<<<< HEAD
-            query_batch = tf.placeholder(tf.int32, shape=[None, None], name='query_batch')
-            doc_pos_batch = tf.placeholder(tf.int32, shape=[None, None], name='doc_positive_batch')
-            doc_neg_batch = tf.placeholder(tf.int32, shape=[None, None], name='doc_negative_batch')
-            query_seq_length = tf.placeholder(tf.int32, shape=[None], name='query_sequence_length')
-            pos_seq_length = tf.placeholder(tf.int32, shape=[None], name='pos_seq_length')
-            neg_seq_length = tf.placeholder(tf.int32, shape=[None], name='neg_sequence_length')
-            on_train = tf.placeholder(tf.bool)
-            drop_out_prob = tf.placeholder(tf.float32, name='drop_out_prob')
-=======
-            self.query_batch = tf.placeholder(tf.int32, shape=[None, None], name='query_batch')
-            self.doc_pos_batch = tf.placeholder(tf.int32, shape=[None, None], name='doc_positive_batch')
-            self.doc_neg_batch = tf.placeholder(tf.int32, shape=[None, None], name='doc_negative_batch')
-            self.query_seq_length = tf.placeholder(tf.int32, shape=[None], name='query_sequence_length')
-            self.pos_seq_length = tf.placeholder(tf.int32, shape=[None], name='pos_seq_length')
-            self.neg_seq_length = tf.placeholder(tf.int32, shape=[None], name='neg_sequence_length')
-            self.on_train = tf.placeholder(tf.bool)
-            self.drop_out_prob = tf.placeholder(tf.float32, name='drop_out_prob')
->>>>>>> 4fdbd3363f2c9ad80c8963e6b25b3a8697ea6240
+            print("input")
 
         with tf.name_scope('word_embeddings_layer'):
             _word_embedding = tf.get_variable(name="word_embedding_arr", dtype=tf.float32,
