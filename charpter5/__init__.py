@@ -9,5 +9,4 @@
 #  https://www.microsoft.com/en-us/research/project/mslr/
 
 #  在讲述DSSM模型时采用了天池比赛OPPO的数据集，有兴趣的可以下载进行实验.
-#  数据可以通过邮件索取
 
