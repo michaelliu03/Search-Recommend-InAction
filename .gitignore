@@ -5,4 +5,10 @@ log
 data
 build
 dist
-
+.idea/.gitignore
+.idea/Search-Recommend-InAction.iml
+.idea/csv-plugin.xml
+.idea/inspectionProfiles/
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
