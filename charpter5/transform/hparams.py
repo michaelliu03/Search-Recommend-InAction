@@ -22,7 +22,4 @@ class Hparams:
     parser.add_argument('--eval2', default='amazon/eval2.txt', help="evaluation segmented data")
 
 
-    #test
-    parser.add_argument('--test1',default='amazon/test1_.txt',help="test segment")
-    parser.add_argument('--test2',default='amazon/test2_.txt',help="test segment")
-    parser.add_argument('--ckpt',default='model/',help="checkpoint file path")
+
