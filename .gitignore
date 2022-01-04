@@ -12,3 +12,4 @@ dist
 .idea/misc.xml
 .idea/modules.xml
 .idea/vcs.xml
+chapter5/transform/amazon/*
