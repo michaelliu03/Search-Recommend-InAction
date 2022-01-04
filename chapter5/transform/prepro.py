@@ -83,10 +83,26 @@ def prepro(hp):
             data_train2.append(line[0])
         elif i < 9:
             data_eva1.append(line[1])
-            data_eva2.append(line[2])
+            data_eva2.append(line[0])
 
             fout1.write(line[1] + '\n')
             fout2.write(line[0] + '\n')
+
+
+    logging.info("# Segment")
+    def _segment_and_write(sents,fname):
+        with open(fname,"w",encoding='utf-8') as fout:
+            for sent in sents:
+                pieces = sp.EncodeAsPieces(sent)
+                fout.write(" ".join(pieces) + "\n")
+
+    _segment_and_write(data_train1,hp.train1)
+    _segment_and_write(data_train2,hp.train2)
+    _segment_and_write(data_eva1,hp.eval1)
+    _segment_and_write(data_eva2,hp.eval2)
+    _segment_and_write(data_test1,hp.test1)
+
+
 
 
 if __name__ == '__main__':
