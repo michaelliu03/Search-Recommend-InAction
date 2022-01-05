@@ -110,11 +110,11 @@ if __name__ == '__main__':
    # print(os.path.abspath("prepro.py"))
    # print(os.path.abspath("data/amazon/amazon_product.txt"))
    #print(sys.path.append('../data/amazon/'))
-   hparams = Hparams()
-   parser = hparams.parser
-   hp = parser.parse_args()
-   prepro(hp)
-   logging.info("Done")
+   # hparams = Hparams()
+   # parser = hparams.parser
+   # hp = parser.parse_args()
+   # prepro(hp)
+   # logging.info("Done")
    sp = spm.SentencePieceProcessor()
    sent = "ph pandahall 10pcs colorful unsoldered bracelet set for women girls"
    sp.Load("./amazon/bpe.model")

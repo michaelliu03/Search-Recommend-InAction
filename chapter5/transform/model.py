@@ -34,7 +34,8 @@ class Transformer:
             enc = tf.compat.v1.nn.embedding_lookup(self.embeddings,x)
             enc *= self.hp.d_model ** 0.5 # scale
 
-            #enc += posi
+            enc += positional_encoding(enc,self.hp.maxlen1)
+            enc = tf.compat.v1.layers.dropout(enc,self.dropout_rate,training=training)
 
 
         logging.INFO("Done")
