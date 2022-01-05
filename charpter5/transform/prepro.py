@@ -5,14 +5,12 @@
 # @Version：V 0.1
 # @File : 
 # @desc :
-import sys
-
 import os
 import errno
 import sentencepiece as spm
 import re
 
-from hparams import Hparams
+from charpter5.transform.hparams import Hparams
 import  logging
 import random
 
@@ -29,11 +27,10 @@ def clean(keys):
         res.append(key)
     return res
 
-def prepro(hp):
+def prepro():
     clean_data = []
     i = 0
-
-    fout = open('./amazon/data2vocab.txt','w',encoding='utf-8')
+    fout = open('amazon/data2vocab.txt','w',encoding='utf-8')
     for line in open(hp.amazon_origin,'r',encoding='utf-8'):
         if i % 1e6 ==0: print('load data',i)
         i += 1
@@ -50,22 +47,20 @@ def prepro(hp):
 
     print('all cleaned data = %d' % n)
     data_train1,data_train2,data_eva1,data_eva2,data_test1,data_test2 = [],[],[],[],[],[]
-    fout1_path = os.path.abspath('amazon/eval_o1.txt')
-    fout2_path = os.path.abspath('amazon/eval_o2.txt')
-    fout1 = open(fout1_path,'w',encoding='utf-8')
-    fout2 = open(fout2_path,'w',encoding='utf-8')
+    fout1 = open('amazon/eval_o1.txt','w',encoding='utf-8')
+    fout2 = open('amazon/eval_o2.txt','w',encoding='utf-8')
 
-    logging.info("# Train a joint BPE model with sentencepiece")
+    logging.INFO("# Train a joint BPE model with sentencepiece")
 
-    train = '--input= ./amazon/data2vocab.txt --pad_id=0 --unk_id=1 \
+    train = '--input=amazon/data2vocab.txt --pad_id=0 --unk_id=1 \
              --bos_id=2 --eos_id=3\
              --model_prefix = amazon/bpe --vocab_size={} \
              --model_type =bpe'.format(hp.vocab_size)
 
     logging.info("# Load trained bpe model")
     sp = spm.SentencePieceProcessor()
-    bpe_model = "./amazon/bpe.model"
-    sp.Load(os.path.abspath(bpe_model))
+
+    sp.Load("amazon/bpe.model")
 
     def get_evaldata(sent1,sent2):
         piece1 = sp.EncodeAsPieces(sent1)
@@ -90,18 +85,9 @@ def prepro(hp):
 
 
 if __name__ == '__main__':
-   logging.info("prepro begin...")
-   # print(os.path.abspath("prepro.py"))
-   # print(os.path.abspath("data/amazon/amazon_product.txt"))
-   #print(sys.path.append('../data/amazon/'))
+   logging.INFO("prepro begin...")
    hparams = Hparams()
    parser = hparams.parser
    hp = parser.parse_args()
    prepro(hp)
-   logging.info("Done")
-   sp = spm.SentencePieceProcessor()
-   sent = "ph pandahall 10pcs colorful unsoldered bracelet set for women girls"
-   sp.Load("./amazon/bpe.model")
-   print(sp.EncodeAsPieces(sent))
-   i = random.randint(1, 10)
-   print(i)
+   logging.INFO("Done")
