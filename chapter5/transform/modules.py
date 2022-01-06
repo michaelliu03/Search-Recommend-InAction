@@ -137,3 +137,37 @@ def ff(inputs,num_units,scope="positionwise_feedforward"):
         outputs = ln(outputs)
 
     return outputs
+
+
+def label_smoothing(inputs, epsilon = 0.1):
+    V = inputs.get_shape().as_list()[-1]
+    return ((1-epsilon) * inputs) + (epsilon / V)
+
+
+def positional_encoding(inputs,
+                        maxlen,
+                        masking =True,
+                        scope = "positional_encoding"):
+    E = inputs.get_shape().as_list()[-1]
+    N,T = tf.shape(inputs)[0],tf.shape(inputs)[1]
+    with tf.compat.v1.variable_scope(scope,reuse=tf.compat.v1.AUTO_REUSE):
+        position_ind = tf.tile(tf.expand_dims(tf.range(T),0),[N,1])
+
+        position_enc = np.array([
+            [pos/np.power(10000,(i - i%2)/E) for i in range(E)]
+             for pos in range(maxlen)])
+
+        position_enc[:,0::2] = np.sin(position_enc[:,0::2])
+        position_enc[:,1::2] = np.cos(position_enc[:,1::2])
+        position_enc = tf.compat.v1.convert_to_tensor(position_enc,position_ind)
+
+        outputs = tf.nn.embedding_lookup(position_enc,position_ind)
+
+        if masking:
+            outputs = tf.where(tf.equal(inputs,0),inputs,outputs)
+
+        return tf.compat.v1.to_float(outputs)
+
+def noam_scheme(init_lr,global_step,warmup_steps = 4000.):
+    step = tf.cast(global_step + 1, dytpe = tf.float32)
+    return init_lr * warmup_steps ** 0.5 * tf.minimum(step * warmup_steps ** -1.5,step ** -0.5)

@@ -10,3 +10,5 @@
 
 ## Training
 * STEP 1. Run the command below to download [IWSLT 2016 German–English parallel corpus](https://wit3.fbk.eu/download.php?release=2016-01&type=texts&slang=de&tlang=en).
+
+* STEP 2. Run the command below to create preprocessed train/eval/test data.
