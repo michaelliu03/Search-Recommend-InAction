@@ -76,3 +76,42 @@ def get_hypotheses(num_batches,num_samples,sess,tensor,dict):
 
     return hypotheses[:num_samples]
 
+def load_hparams(parser,path):
+    if not os.path.isdir(path):
+        path = os.path.dirname(path)
+    d = open(os.path.join(path,"hparams"),'r').read()
+    flag2val = json.loads(d)
+    for f,v in flag2val.items():
+        parser.f = v
+
+def save_variable_specs(fpath):
+
+    def _get_size(shp):
+
+        size = 1
+        for d in range(len(shp)):
+            size *= shp[d]
+        return size
+
+    params,num_params =[],0
+    for v in tf.compat.v1.global_variables():
+        params.append("{}==={}".format(v.name,v.shape))
+        num_params += _get_size(v.shape)
+    print("num_params: ",num_params)
+    with open(fpath,'w') as fout:
+        fout.write("num_params: {}\n".format(num_params))
+        fout.write("\n".join(params))
+    logging.info("Variables info has been saved.")
+
+
+def get_hypotheses(num_batches,num_samples,sess,tensor,dict):
+    hypotheses = []
+    for _ in range(num_batches):
+        h = sess.run(tensor)
+        hypotheses.extend(h.tolist())
+
+    return hypotheses[:num_samples]
+
+
+
+
