@@ -151,6 +151,11 @@ def randomWalk(transitionMatrix,itemDistribution,sampleCount,sampleLength):
 
 def graphEmb(samples,spark,embLength,embOutputFilename,saveToRedis,rediskeyPrefix):
     transitionMatrix,itemDistribution = generateTransitionMatrix(samples)
+    sampleCount = 20000
+    samplesLength = 10
+    newSamples = randomWalk(transitionMatrix,itemDistribution,sampleCount,samplesLength)
+    rddSamples = spark.sparkContext.parallelize(newSamples)
+    trainItem2Vec(spark, rddSamples, embLength, embOutputFilename, saveToRedis, rediskeyPrefix)
 
 
 
