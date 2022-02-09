@@ -97,13 +97,13 @@ outdir_GREEN_WHOLSALE = "hdfs://127.0.0.1:9870/data/pc_home_page/bert_res"  # �
 =============bert advert   站外广告====================
 '''
 TITLE_ADVERT = '_TITLE_ADVERT'  # 任务标签
-HDFS_TITLE_DIR_advert = 'hdfs://127.0.0.1:9870/majiashu/adrec_recall/base_data'  # 源数据
+HDFS_TITLE_DIR_advert = 'hdfs://127.0.0.1:9870/data/adrec_recall/base_data'  # 源数据
 LOCAL_TITLE_DIR_advert = './data/title_advert'  # 源数据 本地存储
 LOCAL_VECTOR_DIR_advert = './data/vector_advert'  # 向量化数据
 LOCAL_EXPORT_DIR_advert = './data/export_advert'  # 计算相似度后数据
 collection_name_advert = 'advert'  # milvus库名
 param_advert = {'collection_name': collection_name_advert, 'dimension': 768, 'index_file_size': 1024}  # milvus库参数
-outdir_advert = "hdfs://127.0.0.1:9870/majiashu/adrec_recall/res_data"  # 输出文件位置
+outdir_advert = "hdfs://127.0.0.1:9870/data/adrec_recall/res_data"  # 输出文件位置
 
 '''
 =============item2vec ====================
