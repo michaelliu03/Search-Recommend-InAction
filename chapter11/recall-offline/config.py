@@ -59,7 +59,7 @@ LOCAL_EXPORT_DIR_itemnew = './data/export_itemnew'
 LOCAL_EXPORT_DIR_itemnew_2 = '/data/apps/recall-offline/15Rec/export_itemnew'
 
 collection_name_recom = 'xlnet768_recom'
-param_lixin = {'collection_name': collection_name_recom, 'dimension': 768, 'index_file_size': 1024}  # milvus库参数
+param_li = {'collection_name': collection_name_recom, 'dimension': 768, 'index_file_size': 1024}  # milvus库参数
 
 outdir_ods_simi_prod = "hdfs://nameservice1/dw/ods/ods_simi_prod"  # nameservice1
 outdir_ods_simi_itemnew = "hdfs://nameservice1/dw/ods/ods_simi_itemnew"
@@ -79,7 +79,7 @@ LOCAL_VECTOR_DIR_crocess_store = './data/vector_crocess_store'  # 向量化数�
 LOCAL_EXPORT_DIR_crocess_store = './data/export_crocess_store'  # 计算相似度后数据
 collection_name_crocess_store = 'bert128_crocess_store'  # milvus库名
 param_crocess_store = {'collection_name': collection_name_crocess_store, 'dimension': 768,'index_file_size': 1024}  # milvus库参数
-outdir_crocess_store = "hdfs://127.0.0.1:9870/majiashu/cross_store_recall/res_data"  # 输出文件位置
+outdir_crocess_store = "hdfs://127.0.0.1:9870/data/cross_store_recall/res_data"  # 输出文件位置
 
 '''
 =============bert pc_home_page  pc 首页优化 绿区批发====================
@@ -91,7 +91,7 @@ LOCAL_VECTOR_DIR_GREEN_WHOLSALE = './data/vector_green_wholesale'  # 向量化�
 LOCAL_EXPORT_DIR_GREEN_WHOLSALE = './data/export_green_wholesale'  # 计算相似度后数据
 collection_name_GREEN_WHOLSALE = 'green_wholesale'  # milvus库名
 param_GREEN_WHOLSALE = {'collection_name': collection_name_GREEN_WHOLSALE, 'dimension': 768, 'index_file_size': 1024}  # milvus库参数
-outdir_GREEN_WHOLSALE = "hdfs://127.0.0.1:9870/majiashu/pc_home_page/bert_res"  # 输出文件位置
+outdir_GREEN_WHOLSALE = "hdfs://127.0.0.1:9870/data/pc_home_page/bert_res"  # 输出文件位置
 
 '''
 =============bert advert   站外广告====================
@@ -109,7 +109,7 @@ outdir_advert = "hdfs://127.0.0.1:9870/majiashu/adrec_recall/res_data"  # 输出
 =============item2vec ====================
 '''
 VECTOR_ITEM2VEC = '_ITEM2VEC'  # 任务标签
-HDFS_VECTOR_DIR_item2vec = 'hdfs://127.0.0.1:9870/zhangrensheng/item2vec'  # 源数据
+HDFS_VECTOR_DIR_item2vec = 'hdfs://127.0.0.1:9870/data/item2vec'  # 源数据
 LOCAL_VECTOR_DIR_item2vec = './data/vector_item2vec'  # 向量化数据
 LOCAL_EXPORT_DIR_item2vec = './data/export_item2vec'  # 计算相似度后数据
 collection_name_item2vec = 'item2vec'  # milvus库名
@@ -151,7 +151,7 @@ outdir_item2vec_u2i = "hdfs://127.0.0.1:9870/data/user2vec_jfy_home/export_res_u
 =============  graph  ====================
 '''
 VECTOR_GRAPH = '_GRAPH'  # 任务标签
-HDFS_VECTOR_DIR_graph = 'hdfs://127.0.0.1:9870/zhangrensheng/graphembedding'  # 源数据
+HDFS_VECTOR_DIR_graph = 'hdfs://127.0.0.1:9870/data/graphembedding'  # 源数据
 LOCAL_VECTOR_DIR_graph = './data/vector_graph'  # 向量化数据
 LOCAL_EXPORT_DIR_graph = './data/export_graph'  # 计算相似度后数据
 collection_name_graph = 'graph'  # milvus库名
