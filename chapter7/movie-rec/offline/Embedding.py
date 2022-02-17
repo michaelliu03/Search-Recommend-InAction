@@ -158,7 +158,24 @@ def graphEmb(samples,spark,embLength,embOutputFilename,saveToRedis,rediskeyPrefi
     trainItem2Vec(spark, rddSamples, embLength, embOutputFilename, saveToRedis, rediskeyPrefix)
 
 
-
+def generateUserEmb(spark, rawSampleDataPath, model, embLength, embOutputPath, saveToRedis, redisKeyPrefix):
+    ratingSamples = spark.read.format("csv").option("header", "true").load(rawSampleDataPath)
+    Vectors_list = []
+    for key, value in model.getVectors().items():
+        Vectors_list.append((key, list(value)))
+    fields = [
+        StructField('movieId', StringType(), False),
+        StructField('emb', ArrayType(FloatType()), False)
+    ]
+    schema = StructType(fields)
+    Vectors_df = spark.createDataFrame(Vectors_list, schema=schema)
+    ratingSamples = ratingSamples.join(Vectors_df, on='movieId', how='inner')
+    result = ratingSamples.select('userId', 'emb').rdd.map(lambda x: (x[0], x[1])) \
+        .reduceByKey(lambda a, b: [a[i] + b[i] for i in range(len(a))]).collect()
+    with open(embOutputPath, 'w') as f:
+        for row in result:
+            vectors = " ".join([str(emb) for emb in row[1]])
+            f.write(row[0] + ":" + vectors + "\n")
 
 
 
@@ -166,6 +183,15 @@ if __name__ == '__main__':
     conf = SparkConf().setAppName('movie-rec').setMaster('local')
     spark = SparkSession.builder.config(conf=conf).getOrCreate()
 
+    file_path =  'file:///D:\\self-doc\\self_project\\Search-Recommend-InAction\\data\\ml-25m\\'
     rawSampleDataPath = 'file:///D:\\self-doc\\self_project\\Search-Recommend-InAction\\data\\ml-25m\\ratings.csv'
     embLength = 10
     samples = processItemSequence(spark, rawSampleDataPath)
+    model = trainItem2Vec(spark, samples, embLength,
+                          embOutputPath=file_path[7:] + "tem2vecEmb.csv", saveToRedis=False,
+                          redisKeyPrefix="i2vEmb")
+    graphEmb(samples, spark, embLength, embOutputFilename=file_path[7:] + "itemGraphEmb.csv",
+             saveToRedis=True, redisKeyPrefix="graphEmb")
+    generateUserEmb(spark, rawSampleDataPath, model, embLength,
+                    embOutputPath=file_path[7:] + "userEmb.csv", saveToRedis=False,
+                    redisKeyPrefix="uEmb")

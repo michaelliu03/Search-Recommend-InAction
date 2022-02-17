@@ -40,3 +40,11 @@ rates_and_predictions = ratings.map(lambda r:((r[0],r[1]),r[2])) \
 
 MSE = rates_and_predictions.map(lambda r: (r[1][0] - r[1][1])**2).mean()
 print("Mean Squared Error =" + str(MSE))
+
+
+saved_path = "../chapter10/myCollaborativeFilter"
+model.save(spark.sparkContext, saved_path)
+
+same_model = MatrixFactorizationModel.load(spark.sparkContext, saved_path)
+
+spark.stop()
